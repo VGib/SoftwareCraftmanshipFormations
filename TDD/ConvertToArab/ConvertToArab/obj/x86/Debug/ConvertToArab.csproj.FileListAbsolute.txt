@@ -1,0 +1,7 @@
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\bin\Debug\ConvertToArab.exe
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\bin\Debug\ConvertToArab.pdb
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\bin\Debug\nunit.framework.dll
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\bin\Debug\nunit.framework.xml
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\obj\x86\Debug\ConvertToArab.csprojResolveAssemblyReference.cache
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\obj\x86\Debug\ConvertToArab.exe
+C:\Users\vgiba\Desktop\SofteamFormation\TDD\ConvertToArab\ConvertToArab\obj\x86\Debug\ConvertToArab.pdb
