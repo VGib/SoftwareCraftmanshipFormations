@@ -16,9 +16,20 @@ namespace Bowling
     public class Bowling
     {
         public int Frame { get { return framesFois2 / 2; } }
+        public int LancerDansLaFrame { get { return framesFois2 % 2 + 1; } }
         public int Quilles { get; private set; } = 10;
         public int Score { get; private set; }
         public Lancer ResultatLancer { get { return lancers.Last(); } private set { lancers.Add(value); } }
+        private int posDernierLancer = 0;
+        private Lancer DernierLancer
+        {
+            get
+            {
+                return lancers[posDernierLancer];
+            }
+        }
+
+        public bool PartieFinie { get; internal set; }
 
         private int framesFois2 = 0;
         private IList<Lancer> lancers = new List<Lancer>();
@@ -37,11 +48,26 @@ namespace Bowling
                 Quilles = 10;
             }
             Score += nombreDeQuillesTombees;
-            if( lancers.Count >= 2 && lancers[lancers.Count - 2] == Lancer.Spare)
+            if (lancers.Count >= 2 && lancers[lancers.Count - 2] == Lancer.Spare)
             {
                 Score += nombreDeQuillesTombees;
             }
             Score += nombreDeQuillesTombees * lancers.Reverse().Skip(1).Take(2).Count(x => x == Lancer.Strike);
+            if (Frame >= 10 && posDernierLancer == 0)
+            {
+                posDernierLancer = lancers.Count - 1;
+            }
+            if (Frame >= 10 && EstCePasLesLancersSupplementaires())
+            {
+                PartieFinie = true;
+            }
+        }
+
+        private bool EstCePasLesLancersSupplementaires()
+        {
+            return (DernierLancer == Lancer.Normal || (DernierLancer == Lancer.Spare && lancers.Count > posDernierLancer + 1)
+                                || (DernierLancer == Lancer.Strike && lancers.Count > posDernierLancer + 2)
+                            );
         }
 
         private void SetResultatLancer(int nombreDeQuillesTombees)
@@ -64,6 +90,12 @@ namespace Bowling
     [TestFixture]
     public class Test
     {
+        [TestCase]
+        public void AuDebutLaPartieNEstPasFinie()
+        {
+            var bowling = new Bowling();
+            Assert.IsFalse(bowling.PartieFinie);
+        }
 
         [TestCase]
         public void AuPremierLancerOnEstALaFrame0()
@@ -207,5 +239,62 @@ namespace Bowling
             Assert.AreEqual(currentScore + 6 * 3, bowling.Score);
         }
 
+        [TestCase]
+        public void ApresLaFrame10LaPartieEstFinie()
+        {
+            var bowling = new Bowling();
+            foreach (var resultat in Enumerable.Repeat(1, 19)) bowling.Lance(resultat);
+            Assert.IsFalse(bowling.PartieFinie);
+            bowling.Lance(1);
+            Assert.IsTrue(bowling.PartieFinie);
+        }
+
+        [TestCase]
+        public void ApresUnSpareLaPartieEstFinieAuFrame10AvecUnLancerSupplementaire()
+        {
+            var bowling = new Bowling();
+            foreach (var resultat in Enumerable.Repeat(1, 18)) bowling.Lance(resultat);
+            bowling.Lance(5);
+            bowling.Lance(5);
+            Assert.IsFalse(bowling.PartieFinie);
+            bowling.Lance(1);
+            Assert.IsTrue(bowling.PartieFinie);
+        }
+
+        [TestCase]
+        public void ApresUnStrikePartieEstFinieAuBoutDe2LancersSupplementaires()
+        {
+            var bowling = new Bowling();
+            foreach (var resultat in Enumerable.Repeat(1, 18)) bowling.Lance(resultat);
+            bowling.Lance(10);
+            bowling.Lance(1);
+            Assert.IsFalse(bowling.PartieFinie);
+            bowling.Lance(1);
+            Assert.IsTrue(bowling.PartieFinie);
+        }
+
+        [TestCase]
+        public void SiDernierFrameSpareApresUnStrikeOnSArrete()
+        {
+            var bowling = new Bowling();
+            foreach (var resultat in Enumerable.Repeat(1, 18)) bowling.Lance(resultat);
+            bowling.Lance(5);
+            bowling.Lance(5);
+            Assert.IsFalse(bowling.PartieFinie);
+            bowling.Lance(10);
+            Assert.IsTrue(bowling.PartieFinie);
+        }
+
+        [TestCase]
+        public void SiDernierFrameEstUnStrikeApres2StrikeOnArrete()
+        {
+            var bowling = new Bowling();
+            foreach (var resultat in Enumerable.Repeat(1, 18)) bowling.Lance(resultat);
+            bowling.Lance(10);
+            bowling.Lance(10);
+            Assert.IsFalse(bowling.PartieFinie);
+            bowling.Lance(10);
+            Assert.IsTrue(bowling.PartieFinie);
+        }
     }
 }
