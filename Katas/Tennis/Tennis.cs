@@ -147,8 +147,8 @@ namespace Tennis
         public string Joueur1Score { get { return joueur1.Score; } } 
         public string Joueur2Score { get { return joueur2.Score; } }
 
-        private Joueur joueur1 = new Joueur();
-        private Joueur joueur2 = new Joueur();
+        private readonly Joueur joueur1 = new Joueur();
+        private readonly Joueur joueur2 = new Joueur();
 
         private  class Joueur
         {
