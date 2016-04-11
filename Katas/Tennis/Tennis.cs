@@ -44,7 +44,7 @@ namespace Tennis
         }
 
         [Fact]
-        public void LorsqueLeJoueur1MarqueEtQueLeJoueur2NestPasA40LeJoueur1Gagne()
+        public void LorsqueLeJoueur1MarqueEtQueLeJoueur1NestPasA40LeJoueur1Gagne()
         {
             Jeux.MarqueJoueur1();
             Jeux.MarqueJoueur1();
