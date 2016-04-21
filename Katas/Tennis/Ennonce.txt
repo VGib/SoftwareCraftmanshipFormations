@@ -1,0 +1,14 @@
+Tennis
+
+En tant que product owner je souhaite mettre en place une application qui donne le score d’un jeu de Tennis.
+Les règles sont les suivantes :
+Les joueurs marquent des points de la manière suivante : 0 puis 15 puis 30 puis 40.
+Si un joueur marque après 40 points, et que l’adversaire a moins de 40 points, il est déclaré vainqueur.
+Dans le cas où les deux joueurs sont à 40 points,  le score devient égalité.
+Dans ce cas le prochain joueur qui marque a un  avantage par rapport son adversaire ; si le joueur marque à nouveau, il est vainqueur.
+Dans le cas où un joueur a un avantage par rapport à l’adversaire, si l’adversaire marque, le score redevient égalité.
+Critères d’acceptances :
+Le développeur présente une application de jeu de Tennis en Console, on peut suivre le score suivant les règles ci-dessus.
+
+
+
