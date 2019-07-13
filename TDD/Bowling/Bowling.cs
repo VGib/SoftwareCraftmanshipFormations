@@ -145,7 +145,7 @@ namespace Bowling
         }
 
         [TestCase]
-        public void LePremierLancerEstUnStrike()
+        public void SiLePremierLancerFaittombeLes10QuillesOnAUnStrike()
         {
             var bowling = new Bowling();
             bowling.Lance(10);
