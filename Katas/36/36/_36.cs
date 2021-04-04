@@ -243,15 +243,9 @@ namespace _36
         {
             var target = CreateTarget();
             target.StartGame();
-            Assert.Throws<_36Exception>(() => target.Roll(0));
-        }
-
-        [Fact]
-        public void starting_game_when_game_has_already_end_is_not_possible_2()
-        {
-            var target = CreateTarget();
-            target.StartGame();
-            Assert.Throws<_36Exception>(() => target.Roll(7));
+            RepeatRoll(target, 6, 6);
+            Assert.Equal(_36GameState.End, target.GameState);
+            Assert.Throws<_36Exception>(() => target.StartGame());
         }
 
         [Fact]
@@ -305,7 +299,7 @@ namespace _36
         {
             var target = CreateTarget();
             target.StartGame();
-            Assert.Throws<_36Exception>(() => target.Roll(0));
+            Assert.Throws<_36Exception>(() => target.Roll(7));
         }
 
         [Fact]
@@ -468,6 +462,16 @@ namespace _36
             target.StartGame();
             RepeatRoll(target, 8, 4);
             RepeatRoll(target, 3, 5);
+
+            Assert.Throws<_36Exception>(() => target.Roll(3));
+        }
+
+        [Fact]
+        public void If_a_player_has_won_noone_can_play_anymore()
+        {
+            var target = CreateTarget();
+            target.StartGame();
+            RepeatRoll(target, 6, 6);
 
             Assert.Throws<_36Exception>(() => target.Roll(3));
         }
