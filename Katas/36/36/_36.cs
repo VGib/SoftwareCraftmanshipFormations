@@ -615,7 +615,7 @@ namespace _36
         }
 
         [Fact]
-        public void when_a_player_has_lost_his_turn_must_be_pass()
+        public void when_a_player_has_lost_his_turn_must_be_passed()
         {
             var target = CreateTarget();
             target.StartGame();
