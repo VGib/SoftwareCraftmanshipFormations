@@ -426,8 +426,6 @@ namespace _36
             Assert.Equal(0, target.LostPlayers.Count);
         }
 
-
-
         [Fact]
         public void If_all_player_has_lost_the_game_LostPlayers_should_contains_all_players()
         {
