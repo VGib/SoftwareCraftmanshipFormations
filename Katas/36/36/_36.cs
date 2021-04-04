@@ -11,10 +11,15 @@ namespace _36
 
         private const int NoPlayer = -1;
 
-        private readonly List<string> _players = new();
+        private class PlayerState
+        {
+            public string Name { get; init; }
+            public bool HasLost { get; set; }
+        }
+
+        private readonly List<PlayerState> _players = new();
         private int _playerTurnIndex = 0;
         private int _winnerIndex = NoPlayer;
-        private int _firstLooserIndex = NoPlayer;
 
         public int CumulativeScore { get; private set; } = 0;
 
@@ -25,7 +30,7 @@ namespace _36
                 throw new _36Exception("can not add player when game has started");
             }
 
-            _players.Add(player);
+            _players.Add(new PlayerState { Name = player } );
         }
 
         public void StartGame()
@@ -46,19 +51,16 @@ namespace _36
             {
                 GameState = _36GameState.End;
                 _winnerIndex = _playerTurnIndex;
-                _playerTurnIndex = NoPlayer;
+                return;
             }
             else if (CumulativeScore + diceValue > MaxGameScore)
             {
-                if (_firstLooserIndex == NoPlayer)
-                {
-                    _firstLooserIndex = _playerTurnIndex;
-                }
+                _players[_playerTurnIndex].HasLost = true;
 
-                else if (_firstLooserIndex == NextPlayer(_playerTurnIndex))
+                if(_players.All(x => x.HasLost))
                 {
                     GameState = _36GameState.End;
-                    _playerTurnIndex = NoPlayer;
+                    return;
                 }
             }
             else
@@ -66,10 +68,7 @@ namespace _36
                 CumulativeScore += diceValue;
             }
 
-            if (_playerTurnIndex != NoPlayer)
-            {
-                _playerTurnIndex = NextPlayer(_playerTurnIndex);
-            }
+            _playerTurnIndex = NextPlayer(_playerTurnIndex);
         }
 
         private void CheckPlayerCanRoll(int diceValue)
@@ -87,18 +86,22 @@ namespace _36
 
         private int NextPlayer(int playerIndex)
         {
-            ++playerIndex;
-            if (playerIndex >= _players.Count)
+            do
             {
-                playerIndex = 0;
+                ++playerIndex;
+                if (playerIndex >= _players.Count)
+                {
+                    playerIndex = 0;
+                }
             }
+            while (_players[playerIndex].HasLost);
 
             return playerIndex;
         }
 
         public _36GameState GameState { get; private set; } = _36GameState.IsEnteringPlayers; 
 
-        public IList<string> Players => _players.ToArray();
+        public IList<string> Players => _players.Select(x => x.Name).ToArray();
 
         public string PlayerTurn
         {
@@ -108,7 +111,7 @@ namespace _36
                     throw new _36Exception("Only avalaible during game!");
                 }
 
-                return _players[_playerTurnIndex];
+                return _players[_playerTurnIndex].Name;
             }
         }
         public string Winner
@@ -125,7 +128,7 @@ namespace _36
                     throw new _36Exception("there is no winner, please don't forget to check HasWinner property");
                 }
 
-                return _players[_winnerIndex];
+                return _players[_winnerIndex].Name;
             }
         }
 
@@ -133,7 +136,7 @@ namespace _36
         {
             get
             {
-                return EnumerateOnLostPlayers().ToArray();
+                return _players.Where(x => x.HasLost).Select(x => x.Name).ToArray();
             }
         }
 
@@ -147,22 +150,6 @@ namespace _36
                 }
 
                return _winnerIndex != NoPlayer;
-            }
-        }
-
-        private IEnumerable<string> EnumerateOnLostPlayers()
-        {
-            if(_firstLooserIndex != NoPlayer)
-            {
-                var index = _firstLooserIndex;
-
-                do
-                {
-                    yield return _players[index];
-                    index = NextPlayer(index);
-                }
-                while (index != _playerTurnIndex && index != _firstLooserIndex
-                && (_winnerIndex == NoPlayer || _winnerIndex != index));
             }
         }
     }
@@ -581,6 +568,52 @@ namespace _36
             RepeatRoll(target, 6, 6);
             Assert.Equal(_36GameState.End, target.GameState);
             Assert.Throws<_36Exception>(() => target.PlayerTurn);
+        }
+
+        [Fact]
+        public void a_player_not_loosing_between_lost_player_should_not_loose()
+        {
+            var target = CreateTarget();
+            target.StartGame();
+            RepeatRoll(target, 8, 4);
+            target.Roll(5);
+            Assert.Equal("toto", target.PlayerTurn);
+            target.Roll(2);
+            target.Roll(5);
+
+            Assert.Equal(_36GameState.Playing, target.GameState);
+        }
+
+        [Fact]
+        public void a_player_not_loosing_between_lost_player_should_not_loose_2()
+        {
+            var target = CreateTarget();
+            target.StartGame();
+            RepeatRoll(target, 8, 4);
+            target.Roll(5);
+            Assert.Equal("toto", target.PlayerTurn);
+            target.Roll(2);
+            target.Roll(5);
+
+            AssertPlayerHasNotLost(target, "toto");
+        }
+
+        [Fact]
+        public void a_player_not_loosing_between_lost_player_can_still_win()
+        {
+            var target = CreateTarget();
+            target.StartGame();
+            RepeatRoll(target, 8, 4);
+            target.Roll(5);
+            Assert.Equal("toto", target.PlayerTurn);
+            target.Roll(2);
+            target.Roll(5);
+
+            Assert.Equal("toto", target.PlayerTurn);
+            target.Roll(2);
+
+            Assert.Equal(_36GameState.End, target.GameState);
+            Assert.Equal("toto", target.Winner);
         }
     }
 }
