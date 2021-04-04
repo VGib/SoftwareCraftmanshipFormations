@@ -185,7 +185,7 @@ namespace _36
           System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 
-    public class _36
+    public class _36Tests
     {
         [Fact]
         public void At_the_begining_we_add_the_players()
