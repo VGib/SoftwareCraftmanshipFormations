@@ -287,7 +287,7 @@ namespace _36
         }
 
         [Fact]
-        public void If_a_dice_value_should_be_between_1_and_6()
+        public void a_dice_value_should_be_between_1_and_6()
         {
             var target = CreateTarget();
             target.StartGame();
@@ -295,7 +295,7 @@ namespace _36
         }
 
         [Fact]
-        public void If_a_dice_value_should_be_between_1_and_2()
+        public void a_dice_value_should_be_between_1_and_2()
         {
             var target = CreateTarget();
             target.StartGame();
