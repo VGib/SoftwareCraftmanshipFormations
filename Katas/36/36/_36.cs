@@ -40,6 +40,11 @@ namespace _36
                 throw new _36Exception("game has already started!");
             }
 
+            if(_players.Count == 0)
+            {
+                throw new _36Exception("a game can not start with no player");
+            }
+
             GameState = _36GameState.Playing;
         }
 
@@ -627,6 +632,13 @@ namespace _36
             Assert.Equal("titi", target.PlayerTurn);
             target.Roll(1);
             Assert.Equal("toto", target.PlayerTurn);
+        }
+
+        [Fact]
+        public void a_game_can_not_start_with_no_player()
+        {
+            var target = new _36();
+            Assert.Throws<_36Exception>(() => target.StartGame());
         }
     }
 }
