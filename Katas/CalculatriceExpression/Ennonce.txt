@@ -1,0 +1,3 @@
+Le but est de programmer une calculatrice
+Elle doit être capable de calculer:
+3 + (5 + 4) * 5 -----> 103
