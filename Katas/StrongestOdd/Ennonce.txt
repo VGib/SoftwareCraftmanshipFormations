@@ -1,0 +1,21 @@
+On cherche à trouver le nombre ayant la plus grande puissance de 2 dans un interval.
+
+Par exemple: [12, 19] ---> 16
+
+car:
+12 ---> 3 * 2 * 2
+13 ---> 13
+14 ---> 7 * 2
+15 ---> 5 * 3
+16 ----> 2 * 2 * 2 * 2
+17 ----> 17
+18 ----> 2 * 3 * 3 
+19 ----> 19
+
+
+Le but est de faire quelque chose qui soit compatible avec int.Max
+par exemple:
+[int.Max - 4, int.Max] ---> résultat int.Max - 3
+
+
+Pour ce la regarder l'astuce 

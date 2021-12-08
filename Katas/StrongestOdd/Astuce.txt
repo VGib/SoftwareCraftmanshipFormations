@@ -1,0 +1,5 @@
+Une façon d'être rapide pour les puissances de 2 est de convertir en bit
+
+ex: 12 = 8 + 4 => 1100 -> puissance de 2 = 4
+    18 = 3 * 3 * 2 +>   10010 -> puissance de 2 = 2
+    15 = 5 * 3 ----> 1111 -> puissance de 2 = 0
