@@ -166,7 +166,7 @@ public class MoneyBackManager
         numberOfPieces[piece.index] += number;
     }
 
-    private readonly JsonSerializerOptions SerializationOption = new() {  WriteIndented = true  };
+    private static readonly JsonSerializerOptions SerializationOption = new() {  WriteIndented = true  };
                 
 
     public string State
