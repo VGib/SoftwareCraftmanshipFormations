@@ -1,0 +1,17 @@
+En tant que boulangerie je souhaite disposer d'une machine à rendre la monnaie.
+
+Les pièces et billets acceptés sont: 500, 200, 100, 50 , 20 ,10, 2 ,1 , 0.5,0.2,0.1,0.05,0.01 euros
+
+Je la charge le matin (via un json) les différentes pièces, et je peux:
+* voire l'état des pièces dans ma machine à tout momment
+* rajouter x pièces d'un certain montant à tout momment
+
+Quand un client paye la machine optimise la monnaie de la mannière suivante:
+ - Elle donne toujours les plus grosses coupures pour rendre la monnaie
+
+Quand la monnaie ne peut être rendue le payment échoue.
+
+Par contre si c'est des centimes qui ne peuvent être rendus le paiement a lieu en défaveur du vendeur
+Ex: 10 pour 9.99 pas de pièce de 0.01 
+devrait rendre 0.01 --> rend 0.02
+
