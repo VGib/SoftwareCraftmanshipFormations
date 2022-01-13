@@ -1,0 +1,17 @@
+Il faut faire un programme qui calcul la loi d'Ohm
+U = R * I
+
+En donnant la tension , l'intensité ou la résistance en text, comme ceci:
+'200 V and 50 A ' => résult '2 Ohm'
+'5A ; 50Ohm' => '100 V'
+'100 V et 20Ohm' => '5 A'
+
+Le résultat doit être de la forme 'XXX.XX{n|µ|m| |k|M|}' et la puissance de 100 doit être la bonne:
+n -> 10^-9
+µ -> 10^-6
+m -> 10^-3
+ -> 0
+k -> 10^3
+M -> 10^6
+
+from: https://www.codewars.com/kata/614dfc4ce78d31004a9c1276
