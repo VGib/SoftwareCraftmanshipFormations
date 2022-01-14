@@ -1,0 +1,4 @@
+En tant que PO je souhaite une fonction qui supprime les mots consécutif indépendamment de la cast:
+"voiture cheval cheval maison" => "voiture cheval maison"
+
+source: https://www.codewars.com/kata/5b39e91ee7a2c103300018b3
