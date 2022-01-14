@@ -104,7 +104,7 @@ namespace SuppressConcecutiveWords
         }
 
         [Test]
-        public void ShouldDealOneCharacterWord()
+        public void ShouldDealWithOneCharacterWord()
         {
             DoTest("chat a  a  a voiture", "chat a voiture");
         }
