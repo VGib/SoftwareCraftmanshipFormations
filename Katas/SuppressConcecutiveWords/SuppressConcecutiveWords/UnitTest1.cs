@@ -116,6 +116,13 @@ namespace SuppressConcecutiveWords
             DoTest("   chat     pigeon      pigeon     pigeon pigeon voiture       maison", "chat pigeon voiture maison");
         }
 
+        [Test]
+        public void ShouldbeCaseInsensitve()
+        {
+            DoTest("   chat     pigeon      Pigeon     pIGeon pigeon voiture       maison", "chat pigeon voiture maison");
+        }
+
+
 
     }
 }
