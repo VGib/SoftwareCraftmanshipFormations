@@ -1,5 +1,5 @@
 ﻿36
 
-Chaque joueur lance le dé à son tour. Si le score cumulé de tous les joueurs avec celui-ci est inférier à 36, le score est augmenté.
-S'il est égal à 36 le joueur a gagné, sinon il est élimné.
+Chaque joueur lance le dé à son tour. Si le score cumulé de tous les joueurs avec celui-ci est inférieur à 36, le score est augmenté.
+S'il est égal à 36 le joueur a gagné, sinon il est éliminé.
 Si tous les joueurs ont été éliminés, il n'y a pas de gagnant.
